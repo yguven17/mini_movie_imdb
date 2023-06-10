@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Search</title>
+</head>
+<body>
+  <h1>Movie Search</h1>
+
+  <h2>Search by Director</h2>
+  <form action="/moviesByDirector" method="GET">
+    <label for="directorId">Director ID:</label>
+    <input type="text" id="directorId" name="directorId">
+    <button type="submit">Search</button>
+    <button onclick="displayMoviesByDirector()">Show Movies</button>
+  </form>
+
+  <h2>Search by Actor</h2>
+  <form action="/moviesByActor" method="GET">
+    <label for="actorId">Actor ID:</label>
+    <input type="text" id="actorId" name="actorId">
+    <button type="submit">Search</button>
+    <button onclick="displayMoviesByActor()">Show Actors</button>
+  </form>
+
+  <h2>Search by Release Date</h2>
+  <form action="/moviesReleasedAfter" method="GET">
+    <label for="date">Release Date (YYYY-MM-DD):</label>
+    <input type="text" id="date" name="date">
+    <button type="submit">Search</button>
+    <button onclick="displayMoviesReleasedAfter()">Show Movies After</button>
+  </form>
+
+  <h2>Search by Genre</h2>
+  <form action="/moviesByGenre" method="GET">
+    <label for="genre">Genre:</label>
+    <input type="text" id="genre" name="genre">
+    <button type="submit">Search</button>
+    <button onclick="displayMoviesByGenre()">Show Genre Movies</button>
+  </form>
+</body>
+</html>
