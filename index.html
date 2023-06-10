@@ -1,40 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Movie Search</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Search</title>
 </head>
 <body>
-  <h1>Movie Search</h1>
+<h1>Movie Search</h1>
 
-  <h2>Search by Director</h2>
-  <form action="/moviesByDirector" method="GET">
+<h2>Search by Director</h2>
+<form action="/moviesByDirector" method="GET">
     <label for="director">Director:</label>
     <input type="text" id="director" name="director">
     <button onclick="displayMoviesByDirector()">Show Movies</button>
-  </form>
+</form>
 
-  <h2>Search by Actor</h2>
-  <form action="/moviesByActor" method="GET">
+<h2>Search by Actor</h2>
+<form action="/moviesByActor" method="GET">
     <label for="actor">Actor Name:</label>
     <input type="text" id="actor" name="actor">
     <button onclick="displayMoviesByActor()">Show Actors</button>
-  </form>
+</form>
 
-  <h2>Search by Release Date</h2>
-  <form action="/moviesReleasedAfter" method="GET">
+<h2>Search by Release Date</h2>
+<form action="/moviesReleasedAfter" method="GET">
     <label for="date">Release Date (YYYY-MM-DD):</label>
     <input type="text" id="date" name="date">
     <button onclick="displayMoviesReleasedAfter()">Show Movies After</button>
-  </form>
+</form>
 
-  <h2>Search by Genre</h2>
-  <form action="/moviesByGenre" method="GET">
+<h2>Search by Genre</h2>
+<form action="/moviesByGenre" method="GET">
     <label for="genre">Genre:</label>
     <input type="text" id="genre" name="genre">
     <button onclick="displayMoviesByGenre()">Show Genre Movies</button>
-  </form>
+</form>
+
+
+<h2>Complex Query 1</h2>
+<form action="/directorsWithMultipleGenres" method="GET">
+    <label for="cq1">Complex Query 1:</label>
+    <input type="text" id="cq1" name="cq1">
+    <button onclick="displayMoviesByGenre()">Show Complex Query</button>
+</form>
+
+
+<h2>Complex Query 2</h2>
+<form action="/actorsWithDirectorsInSameYear" method="GET">
+    <label for="cq2">Complex Query2 :</label>
+    <input type="text" id="cq2" name="cq2">
+    <button onclick="displayMoviesByGenre()">Show Complex Query</button>
+</form>
+
+
+<h2>Complex Query 3</h2>
+<form action="/moviesWithHigherRating" method="GET">
+    <label for="cq3">Complex Query 3:</label>
+    <input type="text" id="cq3" name="cq3">
+    <button onclick="displayMoviesByGenre()">Show Complex Query</button>
+</form>
+
+
+
+<h2>Complex Query 4</h2>
+<form action="/genresWithHighestAverageRating" method="GET">
+    <label for="cq5">Complex Query 5:</label>
+    <input type="text" id="cq5" name="cq5">
+    <button onclick="displayMoviesByGenre()">Show Complex Query</button>
+</form>
+
+
 </body>
 </html>
