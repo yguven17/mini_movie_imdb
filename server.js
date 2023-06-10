@@ -25,10 +25,10 @@ pool.query("SELECT * FROM movie", (error, data) => {
   console.log("Connection made to the database");
 });
 
-function getMoviesByDirector(directorId, callback) {
+function getMoviesByDirector(director, callback) {
   pool.query(
-    "SELECT * FROM MOVIE WHERE director_id = ?",
-    [directorId],
+    "SELECT * FROM MOVIE m INNER JOIN DIRECTOR d ON m.director_id = d.director_id WHERE d.name LIKE ?",
+    [`%${director}%`],
     (error, results) => {
       if (error) throw error;
       callback(results);
@@ -36,16 +36,21 @@ function getMoviesByDirector(directorId, callback) {
   );
 }
 
-function getMoviesByActor(actorId, callback) {
+
+
+function getMoviesByActor(actorName, callback) {
   pool.query(
-    "SELECT * FROM MOVIE m INNER JOIN PLAYS_IN_MOVIES pim ON m.film_id = pim.film_id WHERE pim.actor_id = ?",
-    [actorId],
+    "SELECT m.* FROM MOVIE m INNER JOIN PLAYS_IN_MOVIES pim ON m.film_id = pim.film_id INNER JOIN ACTOR a ON pim.actor_id = a.actor_id WHERE a.name LIKE ?",
+    [`%${actorName}%`],
     (error, results) => {
       if (error) throw error;
       callback(results);
     }
   );
 }
+
+
+
 
 function getMoviesReleasedAfter(date, callback) {
   pool.query(
@@ -74,15 +79,15 @@ app.get("/", (req, res) => {
 });
 
 app.get("/moviesByDirector", (req, res) => {
-  const directorId = req.query.directorId;
-  getMoviesByDirector(directorId, (results) => {
+  const director = req.query.director;
+  getMoviesByDirector(director, (results) => {
     res.send({ movies: results });
   });
 });
 
 app.get("/moviesByActor", (req, res) => {
-  const actorId = req.query.actorId;
-  getMoviesByActor(actorId, (results) => {
+  const actor = req.query.actor;
+  getMoviesByActor(actor, (results) => {
     res.send({ movies: results });
   });
 });

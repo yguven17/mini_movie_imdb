@@ -1,13 +1,13 @@
-async function getMoviesByDirector(directorId) {
-  const response = await fetch(`http://localhost:3000/moviesByDirector?directorId=${directorId}`);
+async function getMoviesByDirector(director) {
+  const response = await fetch(`http://localhost:3000/moviesByDirector?director=${director}`);
   const jsonData = await response.json();
   return jsonData.results;
 }
 
 function displayMoviesByDirector() {
-  const directorId = document.getElementById("directorId").value;
+  const director = document.getElementById("director").value;
 
-  getMoviesByDirector(directorId).then((movies) => {
+  getMoviesByDirector(director).then((movies) => {
     const ul = document.getElementById("movies-by-director");
     ul.innerHTML = ""; // Clear the previous results
 
@@ -19,16 +19,16 @@ function displayMoviesByDirector() {
   });
 }
 
-async function getMoviesByActor(actorId) {
-  const response = await fetch(`http://localhost:3000/moviesByActor?actorId=${actorId}`);
+async function getMoviesByActor(actor) {
+  const response = await fetch(`http://localhost:3000/moviesByActor?actor=${actor}`);
   const jsonData = await response.json();
   return jsonData.results;
 }
 
 function displayMoviesByActor() {
-  const actorId = document.getElementById("actorId").value;
+  const actor = document.getElementById("actor").value;
 
-  getMoviesByActor(actorId).then((movies) => {
+  getMoviesByActor(actor).then((movies) => {
     const ul = document.getElementById("movies-by-actor");
     ul.innerHTML = ""; // Clear the previous results
 
