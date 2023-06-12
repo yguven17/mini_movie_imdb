@@ -60,7 +60,7 @@ function generalSearch(searchText, callback) {
 // movie search from movie
 function getMoviesByMovie(moviename, callback) {
     pool.query(
-        "SELECT * FROM MOVIE m WHERE m.name LIKE ?",
+        "SELECT name, rating, duration, release_date FROM MOVIE m WHERE m.name LIKE ?",
         [`%${moviename}%`],
         (error, results) => {
             if (error) throw error;
@@ -73,7 +73,7 @@ function getMoviesByMovie(moviename, callback) {
 // movie search from director
 function getMoviesByDirector(director, callback) {
     pool.query(
-        "SELECT * FROM MOVIE m INNER JOIN DIRECTOR d ON m.director_id = d.director_id WHERE d.name LIKE ?",
+        "SELECT m.name, m.rating, m.duration, m.release_date, d.name FROM MOVIE m INNER JOIN DIRECTOR d ON m.director_id = d.director_id WHERE d.name LIKE ?",
         [`%${director}%`],
         (error, results) => {
             if (error) throw error;
@@ -85,7 +85,7 @@ function getMoviesByDirector(director, callback) {
 // movie search from actor
 function getMoviesByActor(actorName, callback) {
     pool.query(
-        "SELECT m.* FROM MOVIE m INNER JOIN PLAYS_IN_MOVIES pim ON m.film_id = pim.film_id INNER JOIN ACTOR a ON pim.actor_id = a.actor_id WHERE a.name LIKE ?",
+        "SELECT m.name, m.rating, m.duration, m.release_date, a.name, a.birth_date, a.death_date FROM MOVIE m INNER JOIN PLAYS_IN_MOVIES pim ON m.film_id = pim.film_id INNER JOIN ACTOR a ON pim.actor_id = a.actor_id WHERE a.name LIKE ?",
         [`%${actorName}%`],
         (error, results) => {
             if (error) throw error;
@@ -97,7 +97,7 @@ function getMoviesByActor(actorName, callback) {
 // movie search after given date
 function getMoviesReleasedAfter(date, callback) {
     pool.query(
-        "SELECT * FROM MOVIE WHERE release_date > ?",
+        "SELECT name, duration, rating, release_date FROM MOVIE WHERE release_date > ?",
         [date],
         (error, results) => {
             if (error) throw error;
@@ -109,7 +109,7 @@ function getMoviesReleasedAfter(date, callback) {
 // movie search from genres
 function getMoviesByGenre(genre, callback) {
     pool.query(
-        "SELECT * FROM MOVIE m INNER JOIN GENRE_MOVIES gm ON m.film_id = gm.film_id WHERE gm.genre = ?",
+        "SELECT m.name, m.rating, m.duration, m.release_date, gm.genre  FROM MOVIE m INNER JOIN GENRE_MOVIES gm ON m.film_id = gm.film_id WHERE gm.genre = ?",
         [genre],
         (error, results) => {
             if (error) throw error;
@@ -122,12 +122,12 @@ function getMoviesByGenre(genre, callback) {
 // names of all directors who have directed movies in at least three different genres
 function getDirectorsWithMultipleGenres(callback) {
   const query = `
-    SELECT D.name
+    SELECT D.name, COUNT(M.name)
     FROM DIRECTOR D
     JOIN MOVIE M ON D.director_id = M.director_id
     JOIN GENRE_MOVIES GM ON M.film_id = GM.film_id
     GROUP BY D.director_id
-    HAVING COUNT(DISTINCT GM.genre) >= 3;
+    HAVING COUNT(DISTINCT GM.genre) >= 10;
   `;
 
   pool.query(query, (error, results) => {
@@ -159,7 +159,7 @@ function getActorsWithDirectorsInSameYear(callback) {
 //names of movies that have a rating higher than the average rating of all movies
 function getMoviesWithHigherRating(callback) {
   const query = `
-    SELECT name
+    SELECT name, duration, rating, release_date
     FROM MOVIE
     WHERE rating > (SELECT AVG(rating) FROM MOVIE);
   `;
