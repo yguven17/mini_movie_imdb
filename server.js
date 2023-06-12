@@ -25,7 +25,7 @@ pool.query("SELECT * FROM movie", (error, data) => {
     console.log("Connection made to the database");
 });
 
-
+// general search for input
 function generalSearch(searchText, callback) {
   const query = `
     SELECT 'movie' AS type, name AS title, NULL AS term
@@ -58,7 +58,7 @@ function generalSearch(searchText, callback) {
 }
 
 
-
+// movie search from director
 function getMoviesByDirector(director, callback) {
     pool.query(
         "SELECT * FROM MOVIE m INNER JOIN DIRECTOR d ON m.director_id = d.director_id WHERE d.name LIKE ?",
@@ -70,7 +70,7 @@ function getMoviesByDirector(director, callback) {
     );
 }
 
-
+// movie search from actor
 function getMoviesByActor(actorName, callback) {
     pool.query(
         "SELECT m.* FROM MOVIE m INNER JOIN PLAYS_IN_MOVIES pim ON m.film_id = pim.film_id INNER JOIN ACTOR a ON pim.actor_id = a.actor_id WHERE a.name LIKE ?",
@@ -82,7 +82,7 @@ function getMoviesByActor(actorName, callback) {
     );
 }
 
-
+// movie search after given date
 function getMoviesReleasedAfter(date, callback) {
     pool.query(
         "SELECT * FROM MOVIE WHERE release_date > ?",
@@ -94,6 +94,7 @@ function getMoviesReleasedAfter(date, callback) {
     );
 }
 
+// movie search from genres
 function getMoviesByGenre(genre, callback) {
     pool.query(
         "SELECT * FROM MOVIE m INNER JOIN GENRE_MOVIES gm ON m.film_id = gm.film_id WHERE gm.genre = ?",
@@ -106,6 +107,7 @@ function getMoviesByGenre(genre, callback) {
 }
 // complex queries
 
+// actors who have worked in movies directed by at least two different directors born in the same year
 function getDirectorsWithMultipleGenres(callback) {
   const query = `
     SELECT D.name
@@ -121,6 +123,8 @@ function getDirectorsWithMultipleGenres(callback) {
     callback(results);
   });
 }
+
+// actors who have worked in movies directed by at least two different directors born in the same year
 function getActorsWithDirectorsInSameYear(callback) {
   const query = `
     SELECT A.name
@@ -139,6 +143,8 @@ function getActorsWithDirectorsInSameYear(callback) {
     callback(results);
   });
 }
+
+//names of movies that have a rating higher than the average rating of all movies
 function getMoviesWithHigherRating(callback) {
   const query = `
     SELECT name
@@ -152,6 +158,8 @@ function getMoviesWithHigherRating(callback) {
   });
 }
 
+
+//genres that have the highest average rating among movies released in the last year
 function getGenresWithHighestAverageRating(callback) {
   const query = `
     SELECT GM.genre
