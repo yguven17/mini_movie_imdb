@@ -27,34 +27,34 @@ pool.query("SELECT * FROM movie", (error, data) => {
 
 // general search for input
 function generalSearch(searchText, callback) {
-  const query = `
-    SELECT name
-    FROM MOVIE
-    WHERE name LIKE '%${searchText}%'
-    
-    UNION ALL
-    
-    SELECT name
-    FROM ACTOR
-    WHERE name LIKE '%${searchText }%'
-    
-    UNION ALL
-    
-    SELECT name
-    FROM DIRECTOR
-    WHERE name LIKE '%${searchText}%'
-    
-    UNION ALL
-    
-    SELECT genre
-    FROM GENRE_MOVIES
-    WHERE genre LIKE '%${searchText}%'
-  `;
+    const query = `
+        SELECT name
+        FROM MOVIE
+        WHERE name LIKE '%${searchText}%'
 
-  pool.query(query, (error, results) => {
-    if (error) throw error;
-    callback(results);
-  });
+        UNION ALL
+
+        SELECT name
+        FROM ACTOR
+        WHERE name LIKE '%${searchText}%'
+
+        UNION ALL
+
+        SELECT name
+        FROM DIRECTOR
+        WHERE name LIKE '%${searchText}%'
+
+        UNION ALL
+
+        SELECT genre
+        FROM GENRE_MOVIES
+        WHERE genre LIKE '%${searchText}%'
+    `;
+
+    pool.query(query, (error, results) => {
+        if (error) throw error;
+        callback(results);
+    });
 }
 
 // movie search from movie
@@ -73,7 +73,7 @@ function getMoviesByMovie(moviename, callback) {
 // movie search from director
 function getMoviesByDirector(director, callback) {
     pool.query(
-        "SELECT m.name, m.rating, m.duration, m.release_date, d.name FROM MOVIE m INNER JOIN DIRECTOR d ON m.director_id = d.director_id WHERE d.name LIKE ?",
+        "SELECT m.name AS movie_name, m.rating, m.duration, m.release_date, d.name AS director_name FROM MOVIE m INNER JOIN DIRECTOR d ON m.director_id = d.director_id WHERE d.name LIKE ?",
         [`%${director}%`],
         (error, results) => {
             if (error) throw error;
@@ -85,7 +85,7 @@ function getMoviesByDirector(director, callback) {
 // movie search from actor
 function getMoviesByActor(actorName, callback) {
     pool.query(
-        "SELECT m.name, m.rating, m.duration, m.release_date, a.name, a.birth_date, a.death_date FROM MOVIE m INNER JOIN PLAYS_IN_MOVIES pim ON m.film_id = pim.film_id INNER JOIN ACTOR a ON pim.actor_id = a.actor_id WHERE a.name LIKE ?",
+        "SELECT m.name AS movie_name, m.rating, m.duration, m.release_date, a.name AS actor_name, a.birth_date, a.death_date FROM MOVIE m INNER JOIN PLAYS_IN_MOVIES pim ON m.film_id = pim.film_id INNER JOIN ACTOR a ON pim.actor_id = a.actor_id WHERE a.name LIKE ?",
         [`%${actorName}%`],
         (error, results) => {
             if (error) throw error;
@@ -117,84 +117,80 @@ function getMoviesByGenre(genre, callback) {
         }
     );
 }
+
 // complex queries
 
 // names of all directors who have directed movies in at least three different genres
 function getDirectorsWithMultipleGenres(callback) {
-  const query = `
-    SELECT D.name, COUNT(M.name)
-    FROM DIRECTOR D
-    JOIN MOVIE M ON D.director_id = M.director_id
-    JOIN GENRE_MOVIES GM ON M.film_id = GM.film_id
-    GROUP BY D.director_id
-    HAVING COUNT(DISTINCT GM.genre) >= 10;
-  `;
+    const query = `
+        SELECT D.name, COUNT(M.name)
+        FROM DIRECTOR D
+                 JOIN MOVIE M ON D.director_id = M.director_id
+                 JOIN GENRE_MOVIES GM ON M.film_id = GM.film_id
+        GROUP BY D.director_id
+        HAVING COUNT(DISTINCT GM.genre) >= 10;
+    `;
 
-  pool.query(query, (error, results) => {
-    if (error) throw error;
-    callback(results);
-  });
+    pool.query(query, (error, results) => {
+        if (error) throw error;
+        callback(results);
+    });
 }
 
 // actors who have worked in movies directed by at least two different directors born in the same year
 function getActorsWithDirectorsInSameYear(callback) {
-  const query = `
-    SELECT A.name
-    FROM ACTOR A
-    JOIN PLAYS_IN_MOVIES PIM ON A.actor_id = PIM.actor_id
-    JOIN MOVIE M ON PIM.film_id = M.film_id
-    JOIN DIRECTOR D1 ON M.director_id = D1.director_id
-    JOIN DIRECTOR D2 ON M.director_id <> D2.director_id
-    WHERE YEAR(D1.birth_date) = YEAR(D2.birth_date)
-    GROUP BY A.actor_id
-    HAVING COUNT(DISTINCT M.director_id) >= 2;
-  `;
+    const query = `
+        SELECT A.name
+        FROM ACTOR A
+                 JOIN PLAYS_IN_MOVIES PIM ON A.actor_id = PIM.actor_id
+                 JOIN MOVIE M ON PIM.film_id = M.film_id
+                 JOIN DIRECTOR D1 ON M.director_id = D1.director_id
+                 JOIN DIRECTOR D2 ON M.director_id <> D2.director_id
+        WHERE YEAR (D1.birth_date) = YEAR (D2.birth_date)
+        GROUP BY A.actor_id
+        HAVING COUNT (DISTINCT M.director_id) >= 2;
+    `;
 
-  pool.query(query, (error, results) => {
-    if (error) throw error;
-    callback(results);
-  });
+    pool.query(query, (error, results) => {
+        if (error) throw error;
+        callback(results);
+    });
 }
 
 //names of movies that have a rating higher than the average rating of all movies
 function getMoviesWithHigherRating(callback) {
-  const query = `
-    SELECT name, duration, rating, release_date
-    FROM MOVIE
-    WHERE rating > (SELECT AVG(rating) FROM MOVIE);
-  `;
+    const query = `
+        SELECT name, duration, rating, release_date
+        FROM MOVIE
+        WHERE rating > (SELECT AVG(rating) FROM MOVIE);
+    `;
 
-  pool.query(query, (error, results) => {
-    if (error) throw error;
-    callback(results);
-  });
+    pool.query(query, (error, results) => {
+        if (error) throw error;
+        callback(results);
+    });
 }
 
 
 //genres that have the highest average rating among movies released in the last year
 function getGenresWithHighestAverageRating(callback) {
-  const query = `
-    SELECT GM.genre
-    FROM GENRE_MOVIES GM
-    JOIN MOVIE M ON GM.film_id = M.film_id
-    WHERE M.release_date >= DATE_SUB(NOW(), INTERVAL 1 YEAR)
-    GROUP BY GM.genre
-    HAVING AVG(M.rating) = (
-      SELECT MAX(avg_rating)
-      FROM (
-        SELECT AVG(M.rating) AS avg_rating
-        FROM GENRE_MOVIES GM
-        JOIN MOVIE M ON GM.film_id = M.film_id
-        WHERE M.release_date >= DATE_SUB(NOW(), INTERVAL 1 YEAR)
-        GROUP BY GM.genre
-      ) AS avg_ratings
-    );
-  `;
+    const query = `
+        SELECT G.genre, M.name
+        FROM GENRE_MOVIES G
+                 JOIN MOVIE M ON G.film_id = M.film_id
+        WHERE M.rating = (SELECT MAX(avg_rating)
+                          FROM (SELECT AVG(M2.rating) AS avg_rating
+                                FROM MOVIE M2
+                                GROUP BY M2.film_id) AS avg_ratings)
+        GROUP BY G.genre, M.name;
 
-  pool.query(query, (error, results) => {
-    if (error) throw error;
-    callback(results);
-  });
+
+    `;
+
+    pool.query(query, (error, results) => {
+        if (error) throw error;
+        callback(results);
+    });
 }
 
 
@@ -204,11 +200,11 @@ app.get("/", (req, res) => {
 });
 
 app.get("/generalSearch", (req, res) => {
-  const searchText = req.query.searchText;
+    const searchText = req.query.searchText;
 
-  generalSearch(searchText, (results) => {
-    res.send({ searchResults: results });
-  });
+    generalSearch(searchText, (results) => {
+        res.send({searchResults: results});
+    });
 });
 
 
@@ -248,27 +244,27 @@ app.get("/moviesByGenre", (req, res) => {
 });
 
 app.get("/directorsWithMultipleGenres", (req, res) => {
-  getDirectorsWithMultipleGenres((results) => {
-    res.send({ directors: results });
-  });
+    getDirectorsWithMultipleGenres((results) => {
+        res.send({directors: results});
+    });
 });
 
 app.get("/actorsWithDirectorsInSameYear", (req, res) => {
-  getActorsWithDirectorsInSameYear((results) => {
-    res.send({ actors: results });
-  });
+    getActorsWithDirectorsInSameYear((results) => {
+        res.send({actors: results});
+    });
 });
 
 app.get("/moviesWithHigherRating", (req, res) => {
-  getMoviesWithHigherRating((results) => {
-    res.send({ movies: results });
-  });
+    getMoviesWithHigherRating((results) => {
+        res.send({movies: results});
+    });
 });
 
 app.get("/genresWithHighestAverageRating", (req, res) => {
-  getGenresWithHighestAverageRating((results) => {
-    res.send({ genres: results });
-  });
+    getGenresWithHighestAverageRating((results) => {
+        res.send({genres: results});
+    });
 });
 
 app.listen(3000, () => {
