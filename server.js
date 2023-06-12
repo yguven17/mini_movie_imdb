@@ -57,6 +57,18 @@ function generalSearch(searchText, callback) {
   });
 }
 
+// movie search from movie
+function getMoviesByMovie(movie, callback) {
+    pool.query(
+        "SELECT * FROM MOVIE m  WHERE m.name LIKE ?",
+        [`%${movie}%`],
+        (error, results) => {
+            if (error) throw error;
+            callback(results);
+        }
+    );
+}
+
 
 // movie search from director
 function getMoviesByDirector(director, callback) {
@@ -199,6 +211,13 @@ app.get("/generalSearch", (req, res) => {
   });
 });
 
+
+app.get("/moviesByMovie", (req, res) => {
+    const movie = req.query.movie;
+    getMoviesByMovie(movie, (results) => {
+        res.send({movies: results});
+    });
+});
 
 app.get("/moviesByDirector", (req, res) => {
     const director = req.query.director;

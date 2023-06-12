@@ -16,6 +16,13 @@
     <button placeholder="Charlton" onclick="displayGeneralSearch()">General Search</button>
 </form>
 
+<h2>Search by Movie</h2>
+<form action="/moviesByMovie" method="GET">
+    <label for="movie">Movie:</label>
+    <input type="text" id="movie" name="movie">
+    <button placeholder="Miss" onclick="displayMoviesByMovie()">Show Movies</button>
+</form>
+
 <h2>Search by Director</h2>
 <form action="/moviesByDirector" method="GET">
     <label for="director">Director:</label>
