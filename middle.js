@@ -5,22 +5,16 @@ async function getGeneralSearch(searchText) {
 }
 
 function displayGeneralSearch() {
-    const searchText = document.getElementById("searchText").value;
+    const searchText = document.getElementById("searchText").getElementsByTagName('tbody')[0];
 
     getGeneralSearch(searchText).then((results) => {
         const ul = document.getElementById("search-results");
         ul.innerHTML = ""; // Clear the previous results
 
         results.forEach((result) => {
-            const li = document.createElement("li");
-            if (result.type === "movie") {
-                li.textContent = result.title;
-            } else if (result.type === "actor" || result.type === "director") {
-                li.textContent = result.name;
-            } else if (result.type === "genre") {
-                li.textContent = result.genre;
-            }
-            ul.appendChild(li);
+            const row = ul.insertRow();
+            const table = row.insertCell(0);
+            table.innerHTML = results[result];
         });
     });
 }

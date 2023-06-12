@@ -16,12 +16,40 @@
     <button placeholder="Charlton" onclick="displayGeneralSearch()">General Search</button>
 </form>
 
+<h2>Output:</h2>
+<table id="generalSearchTable" border="1">
+    <thead>
+    <tr>
+        <th>Type</th>
+        <th>Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
 <h2>Search by Movie</h2>
 <form action="/moviesByMovie" method="GET">
     <label for="moviename">Movie:</label>
     <input type="text" id="moviename" name="moviename">
     <button placeholder="Miss" onclick="displayMoviesByMovie()">Show Movies</button>
 </form>
+
+<h2>Output:</h2>
+<table id="moviesByMovieTable" border="1">
+    <thead>
+    <tr>
+        <th>Movie Name</th>
+        <th>Rating</th>
+        <th>Duration</th>
+        <th>Release Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+
 
 <h2>Search by Director</h2>
 <form action="/moviesByDirector" method="GET">
@@ -30,12 +58,42 @@
     <button placeholder="Charlton" onclick="displayMoviesByDirector()">Show Movies</button>
 </form>
 
+<h2>Output:</h2>
+<table id="moviesByDirectorTable" border="1">
+    <thead>
+    <tr>
+        <th>Movie Name</th>
+        <th>Rating</th>
+        <th>Duration</th>
+        <th>Release Date</th>
+        <th>Director Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
 <h2>Search by Actor</h2>
 <form action="/moviesByActor" method="GET">
     <label for="actor">Actor Name:</label>
     <input type="text" id="actor" name="actor">
     <button placeholder="Tony"  onclick="displayMoviesByActor()">Show Actors</button>
 </form>
+
+<h2>Output:</h2>
+<table id="moviesByActorTable" border="1">
+    <thead>
+    <tr>
+        <th>Movie Name</th>
+        <th>Rating</th>
+        <th>Duration</th>
+        <th>Release Date</th>
+        <th>Actor Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
 
 <h2>Search by Release Date</h2>
 <form action="/moviesReleasedAfter" method="GET">
@@ -44,12 +102,43 @@
     <button onclick="displayMoviesReleasedAfter()">Show Movies After</button>
 </form>
 
+
+<h2>Output:</h2>
+<table id="moviesReleasedAfterTable" border="1">
+    <thead>
+    <tr>
+        <th>Movie Name</th>
+        <th>Rating</th>
+        <th>Duration</th>
+        <th>Release Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
 <h2>Search by Genre</h2>
 <form action="/moviesByGenre" method="GET">
     <label for="genre">Genre:</label>
     <input type="text" id="genre" name="genre">
     <button placeholder="click Show Complex Query " onclick="displayMoviesByGenre()">Show Genre Movies</button>
 </form>
+
+
+<h2>Output:</h2>
+<table id="moviesByGenreTable" border="1">
+    <thead>
+    <tr>
+        <th>Movie Name</th>
+        <th>Rating</th>
+        <th>Duration</th>
+        <th>Release Date</th>
+        <th>Genre</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
 
 
 <h2>Complex Query 1</h2>
@@ -60,6 +149,18 @@
     <button placeholder="click Show Complex Query " onclick="displayDirectorsWithMultipleGenres()">Show Complex Query</button>
 </form>
 
+<h2>Output:</h2>
+<table id="directorsWithMultipleGenresTable" border="1">
+    <thead>
+    <tr>
+        <th>Director Name</th>
+        <th>Movie Count</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
 
 <h2>Complex Query 2</h2>
 <form action="/actorsWithDirectorsInSameYear" method="GET">
@@ -69,6 +170,16 @@
     <button placeholder="click Show Complex Query " onclick="displayActorsWithDirectorsInSameYear()">Show Complex Query</button>
 </form>
 
+<h2>Output:</h2>
+<table id="actorsWithDirectorsInSameYearTable" border="1">
+    <thead>
+    <tr>
+        <th>Actor Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
 
 <h2>Complex Query 3</h2>
 <form action="/moviesWithHigherRating" method="GET">
@@ -77,6 +188,20 @@
     <input type="text" id="cq3" name="cq3">
     <button placeholder="click Show Complex Query " onclick="displayMoviesWithHigherRating()">Show Complex Query</button>
 </form>
+
+<h2>Output:</h2>
+<table id="moviesWithHigherRatingTable" border="1">
+    <thead>
+    <tr>
+        <th>Movie Name</th>
+        <th>Duration</th>
+        <th>Rating</th>
+        <th>Release Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
 
 
 <h2>Complex Query 4</h2>
@@ -87,7 +212,18 @@
     <button placeholder="click Show Complex Query " onclick="displayGenresWithHighestAverageRating()">Show Complex Query</button>
 </form>
 
-<li2>Movie Search Results</li2>
+<h2>Output:</h2>
+<table id="genresWithHighestAverageRatingTable" border="1">
+    <thead>
+    <tr>
+        <th>Genre</th>
+        <th>Movie Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
 
 <ul id="data"></ul>
 
