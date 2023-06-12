@@ -28,25 +28,25 @@ pool.query("SELECT * FROM movie", (error, data) => {
 // general search for input
 function generalSearch(searchText, callback) {
     const query = `
-        SELECT name
+        SELECT 'movie' AS table_type, name
         FROM MOVIE
         WHERE name LIKE '%${searchText}%'
 
-        UNION ALL
+        UNION
 
-        SELECT name
+        SELECT 'actor' AS table_type, name
         FROM ACTOR
         WHERE name LIKE '%${searchText}%'
 
-        UNION ALL
+        UNION
 
-        SELECT name
+        SELECT 'director' AS table_type, name
         FROM DIRECTOR
         WHERE name LIKE '%${searchText}%'
 
-        UNION ALL
+        UNION
 
-        SELECT genre
+        SELECT 'genre' AS table_type, genre
         FROM GENRE_MOVIES
         WHERE genre LIKE '%${searchText}%'
     `;
