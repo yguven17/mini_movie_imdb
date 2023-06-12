@@ -119,7 +119,7 @@ function getMoviesByGenre(genre, callback) {
 }
 // complex queries
 
-// actors who have worked in movies directed by at least two different directors born in the same year
+// names of all directors who have directed movies in at least three different genres
 function getDirectorsWithMultipleGenres(callback) {
   const query = `
     SELECT D.name

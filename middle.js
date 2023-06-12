@@ -1,28 +1,28 @@
 async function getGeneralSearch(searchText) {
-  const response = await fetch(`http://localhost:3000/generalSearch?searchText=${searchText}`);
-  const jsonData = await response.json();
-  return jsonData.results;
+    const response = await fetch(`http://localhost:3000/generalSearch?searchText=${searchText}`);
+    const jsonData = await response.json();
+    return jsonData.results;
 }
 
 function displayGeneralSearch() {
-  const searchText = document.getElementById("searchText").value;
+    const searchText = document.getElementById("searchText").value;
 
-  getGeneralSearch(searchText).then((results) => {
-    const ul = document.getElementById("search-results");
-    ul.innerHTML = ""; // Clear the previous results
+    getGeneralSearch(searchText).then((results) => {
+        const ul = document.getElementById("search-results");
+        ul.innerHTML = ""; // Clear the previous results
 
-    results.forEach((result) => {
-      const li = document.createElement("li");
-      if (result.type === "movie") {
-        li.textContent = result.title;
-      } else if (result.type === "actor" || result.type === "director") {
-        li.textContent = result.name;
-      } else if (result.type === "genre") {
-        li.textContent = result.genre;
-      }
-      ul.appendChild(li);
+        results.forEach((result) => {
+            const li = document.createElement("li");
+            if (result.type === "movie") {
+                li.textContent = result.title;
+            } else if (result.type === "actor" || result.type === "director") {
+                li.textContent = result.name;
+            } else if (result.type === "genre") {
+                li.textContent = result.genre;
+            }
+            ul.appendChild(li);
+        });
     });
-  });
 }
 
 async function getMoviesByMovie(moviename) {
@@ -133,65 +133,82 @@ function displayMoviesByGenre() {
 
 
 async function getDirectorsWithMultipleGenres() {
-  const response = await fetch("http://localhost:3000/directorsWithMultipleGenres");
-  const jsonData = await response.json();
-  return jsonData.results;
+    const response = await fetch("http://localhost:3000/directorsWithMultipleGenres");
+    const jsonData = await response.json();
+    return jsonData.results;
 }
 
 async function getActorsWithDirectorsInSameYear() {
-  const response = await fetch("http://localhost:3000/actorsWithDirectorsInSameYear");
-  const jsonData = await response.json();
-  return jsonData.results;
+    const response = await fetch("http://localhost:3000/actorsWithDirectorsInSameYear");
+    const jsonData = await response.json();
+    return jsonData.results;
 }
-function displayActorsWithDirectorsInSameYear() {
-  getActorsWithDirectorsInSameYear().then((actors) => {
-    const ul = document.getElementById("actors-with-directors-in-same-year");
+
+function displayDirectorsWithMultipleGenres() {
+  getDirectorsWithMultipleGenres().then((directors) => {
+    const ul = document.getElementById("directors-with-multiple-genres");
     ul.innerHTML = ""; // Clear the previous results
 
-    actors.forEach((actor) => {
+    directors.forEach((director) => {
       const li = document.createElement("li");
-      li.textContent = actor.name;
+      li.textContent = director.name;
       ul.appendChild(li);
     });
   });
+}
+
+
+function displayActorsWithDirectorsInSameYear() {
+    getActorsWithDirectorsInSameYear().then((actors) => {
+        const ul = document.getElementById("actors-with-directors-in-same-year");
+        ul.innerHTML = ""; // Clear the previous results
+
+        actors.forEach((actor) => {
+            const li = document.createElement("li");
+            li.textContent = actor.name;
+            ul.appendChild(li);
+        });
+    });
 }
 
 
 async function getMoviesWithHigherRating() {
-  const response = await fetch("http://localhost:3000/moviesWithHigherRating");
-  const jsonData = await response.json();
-  return jsonData.results;
+    const response = await fetch("http://localhost:3000/moviesWithHigherRating");
+    const jsonData = await response.json();
+    return jsonData.results;
 }
-function displayMoviesWithHigherRating() {
-  getMoviesWithHigherRating().then((movies) => {
-    const ul = document.getElementById("movies-with-higher-rating");
-    ul.innerHTML = ""; // Clear the previous results
 
-    movies.forEach((movie) => {
-      const li = document.createElement("li");
-      li.textContent = movie.name;
-      ul.appendChild(li);
+function displayMoviesWithHigherRating() {
+    getMoviesWithHigherRating().then((movies) => {
+        const ul = document.getElementById("movies-with-higher-rating");
+        ul.innerHTML = ""; // Clear the previous results
+
+        movies.forEach((movie) => {
+            const li = document.createElement("li");
+            li.textContent = movie.name;
+            ul.appendChild(li);
+        });
     });
-  });
 }
 
 
 async function getGenresWithHighestAverageRating() {
-  const response = await fetch("http://localhost:3000/genresWithHighestAverageRating");
-  const jsonData = await response.json();
-  return jsonData.results;
+    const response = await fetch("http://localhost:3000/genresWithHighestAverageRating");
+    const jsonData = await response.json();
+    return jsonData.results;
 }
-function displayGenresWithHighestAverageRating() {
-  getGenresWithHighestAverageRating().then((genres) => {
-    const ul = document.getElementById("genres-with-highest-average-rating");
-    ul.innerHTML = ""; // Clear the previous results
 
-    genres.forEach((genre) => {
-      const li = document.createElement("li");
-      li.textContent = genre.genre;
-      ul.appendChild(li);
+function displayGenresWithHighestAverageRating() {
+    getGenresWithHighestAverageRating().then((genres) => {
+        const ul = document.getElementById("genres-with-highest-average-rating");
+        ul.innerHTML = ""; // Clear the previous results
+
+        genres.forEach((genre) => {
+            const li = document.createElement("li");
+            li.textContent = genre.genre;
+            ul.appendChild(li);
+        });
     });
-  });
 }
 
 

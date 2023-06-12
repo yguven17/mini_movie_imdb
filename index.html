@@ -54,34 +54,38 @@
 
 <h2>Complex Query 1</h2>
 <form action="/directorsWithMultipleGenres" method="GET">
+    <label>Names of all directors who have directed movies in at least three different genres</label>
     <label for="cq1">Complex Query 1:</label>
     <input type="text" id="cq1" name="cq1">
-    <button placeholder="click Show Complex Query " onclick="displayMoviesByGenre()">Show Complex Query</button>
+    <button placeholder="click Show Complex Query " onclick="displayDirectorsWithMultipleGenres()">Show Complex Query</button>
 </form>
 
 
 <h2>Complex Query 2</h2>
 <form action="/actorsWithDirectorsInSameYear" method="GET">
+    <label>Actors who have worked in movies directed by at least two different directors born in the same year</label>
     <label for="cq2">Complex Query2 :</label>
     <input type="text" id="cq2" name="cq2">
-    <button placeholder="click Show Complex Query " onclick="displayMoviesByGenre()">Show Complex Query</button>
+    <button placeholder="click Show Complex Query " onclick="displayActorsWithDirectorsInSameYear()">Show Complex Query</button>
 </form>
 
 
 <h2>Complex Query 3</h2>
 <form action="/moviesWithHigherRating" method="GET">
+    <label>Names of movies that have a rating higher than the average rating of all movies</label>
     <label for="cq3">Complex Query 3:</label>
     <input type="text" id="cq3" name="cq3">
-    <button placeholder="click Show Complex Query " onclick="displayMoviesByGenre()">Show Complex Query</button>
+    <button placeholder="click Show Complex Query " onclick="displayMoviesWithHigherRating()">Show Complex Query</button>
 </form>
 
 
 
 <h2>Complex Query 4</h2>
 <form action="/genresWithHighestAverageRating" method="GET">
+    <label>Genres that have the highest average rating among movies released in the last year</label>
     <label for="cq5">Complex Query 4:</label>
     <input type="text" id="cq5" name="cq5">
-    <button placeholder="click Show Complex Query " onclick="displayMoviesByGenre()">Show Complex Query</button>
+    <button placeholder="click Show Complex Query " onclick="displayGenresWithHighestAverageRating()">Show Complex Query</button>
 </form>
 
 <li2>Movie Search Results</li2>

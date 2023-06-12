@@ -1,0 +1,31 @@
+{
+  "name": "mini_movie_imdb",
+  "version": "1.0.0",
+  "description": "mini movie imdb",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yguven17/mini_movie_imdb.git"
+  },
+  "keywords": [
+    "mini",
+    "movie",
+    "imdb"
+  ],
+  "author": "yguven17",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yguven17/mini_movie_imdb/issues"
+  },
+  "homepage": "https://github.com/yguven17/mini_movie_imdb#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "console": "^0.7.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "mysql": "^2.18.1"
+  }
+}
