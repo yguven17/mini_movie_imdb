@@ -25,16 +25,16 @@ function displayGeneralSearch() {
   });
 }
 
-async function getMoviesByMovie(movie) {
-    const response = await fetch(`http://localhost:3000/moviesByMovie?movie=${movie}`);
+async function getMoviesByMovie(moviename) {
+    const response = await fetch(`http://localhost:3000/moviesByMovie?movie=${moviename}`);
     const jsonData = await response.json();
     return jsonData.results;
 }
 
 function displayMoviesByMovie() {
-    const movie = document.getElementById("movie").value;
+    const moviename = document.getElementById("moviename").value;
 
-    getMoviesByMovie(movie).then((movies) => {
+    getMoviesByMovie(moviename).then((movies) => {
         const ul = document.getElementById("data");
         ul.innerHTML = ""; // Clear the previous results
 

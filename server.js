@@ -58,10 +58,10 @@ function generalSearch(searchText, callback) {
 }
 
 // movie search from movie
-function getMoviesByMovie(movie, callback) {
+function getMoviesByMovie(moviename, callback) {
     pool.query(
-        "SELECT * FROM MOVIE m  WHERE m.name LIKE ?",
-        [`%${movie}%`],
+        "SELECT * FROM MOVIE m WHERE m.name LIKE ?",
+        [`%${moviename}%`],
         (error, results) => {
             if (error) throw error;
             callback(results);
@@ -213,8 +213,8 @@ app.get("/generalSearch", (req, res) => {
 
 
 app.get("/moviesByMovie", (req, res) => {
-    const movie = req.query.movie;
-    getMoviesByMovie(movie, (results) => {
+    const moviename = req.query.moviename;
+    getMoviesByMovie(moviename, (results) => {
         res.send({movies: results});
     });
 });
