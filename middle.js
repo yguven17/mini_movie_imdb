@@ -26,7 +26,7 @@ function displayGeneralSearch() {
 }
 
 async function getMoviesByMovie(moviename) {
-    const response = await fetch(`http://localhost:3000/moviesByMovie?movie=${moviename}`);
+    const response = await fetch(`http://localhost:3000/moviesByMovie?moviename=${moviename}`);
     const jsonData = await response.json();
     return jsonData.results;
 }
