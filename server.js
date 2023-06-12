@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 const pool = mysql.createPool({
     host: "localhost",
     user: "root",
-    password: "101118232425",
+    password: "password",
     database: "db",
 });
 
@@ -194,30 +194,15 @@ function getGenresWithHighestAverageRating(callback) {
 }
 
 // linking
-const fs = require('fs');
-
 app.get("/", (req, res) => {
-    fs.readFile(path.join(__dirname, "index.html"), 'utf8', (err, data) => {
-        if (err) {
-            res.status(500).send('Error reading index.html file');
-        } else {
-            res.send(data);
-        }
-    });
+    res.sendFile(path.join(__dirname, "index.html"));
 });
 
 app.get("/generalSearch", (req, res) => {
     const searchText = req.query.searchText;
 
     generalSearch(searchText, (results) => {
-        fs.readFile(path.join(__dirname, "index.html"), 'utf8', (err, data) => {
-            if (err) {
-                res.status(500).send('Error reading index.html file');
-            } else {
-                const modifiedData = data.replace('{{SEARCH_RESULTS}}', JSON.stringify({ searchResults: results }));
-                res.send(modifiedData);
-            }
-        });
+        res.send({searchResults: results});
     });
 });
 
@@ -225,125 +210,61 @@ app.get("/generalSearch", (req, res) => {
 app.get("/moviesByMovie", (req, res) => {
     const moviename = req.query.moviename;
     getMoviesByMovie(moviename, (results) => {
-        fs.readFile(path.join(__dirname, "index.html"), 'utf8', (err, data) => {
-            if (err) {
-                res.status(500).send('Error reading index.html file');
-            } else {
-                const modifiedData = data.replace('{{MOVIES_RESULTS}}', JSON.stringify({ movies: results }));
-                res.send(modifiedData);
-            }
-        });
+        res.send({movies: results});
     });
 });
 
 app.get("/moviesByDirector", (req, res) => {
     const director = req.query.director;
     getMoviesByDirector(director, (results) => {
-        fs.readFile(path.join(__dirname, "index.html"), 'utf8', (err, data) => {
-            if (err) {
-                res.status(500).send('Error reading index.html file');
-            } else {
-                const modifiedData = data.replace('{{MOVIES_RESULTS}}', JSON.stringify({ movies: results }));
-                res.send(modifiedData);
-            }
-        });
+        res.send({movies: results});
     });
 });
 
 app.get("/moviesByActor", (req, res) => {
     const actor = req.query.actor;
     getMoviesByActor(actor, (results) => {
-        fs.readFile(path.join(__dirname, "index.html"), 'utf8', (err, data) => {
-            if (err) {
-                res.status(500).send('Error reading index.html file');
-            } else {
-                const modifiedData = data.replace('{{MOVIES_RESULTS}}', JSON.stringify({ movies: results }));
-                res.send(modifiedData);
-            }
-        });
+        res.send({movies: results});
     });
 });
 
 app.get("/moviesReleasedAfter", (req, res) => {
     const date = req.query.date;
     getMoviesReleasedAfter(date, (results) => {
-        fs.readFile(path.join(__dirname, "index.html"), 'utf8', (err, data) => {
-            if (err) {
-                res.status(500).send('Error reading index.html file');
-            } else {
-                const modifiedData = data.replace('{{MOVIES_RESULTS}}', JSON.stringify({ movies: results }));
-                res.send(modifiedData);
-            }
-        });
+        res.send({movies: results});
     });
 });
 
 app.get("/moviesByGenre", (req, res) => {
     const genre = req.query.genre;
     getMoviesByGenre(genre, (results) => {
-        fs.readFile(path.join(__dirname, "index.html"), 'utf8', (err, data) => {
-            if (err) {
-                res.status(500).send('Error reading index.html file');
-            } else {
-                const modifiedData = data.replace('{{MOVIES_RESULTS}}', JSON.stringify({ movies: results }));
-                res.send(modifiedData);
-            }
-        });
+        res.send({movies: results});
     });
 });
 
 app.get("/directorsWithMultipleGenres", (req, res) => {
     getDirectorsWithMultipleGenres((results) => {
-        fs.readFile(path.join(__dirname, "index.html"), 'utf8', (err, data) => {
-            if (err) {
-                res.status(500).send('Error reading index.html file');
-            } else {
-                const modifiedData = data.replace('{{DIRECTORS_RESULTS}}', JSON.stringify({ directors: results }));
-                res.send(modifiedData);
-            }
-        });
+        res.send({directors: results});
     });
 });
 
 app.get("/actorsWithDirectorsInSameYear", (req, res) => {
     getActorsWithDirectorsInSameYear((results) => {
-        fs.readFile(path.join(__dirname, "index.html"), 'utf8', (err, data) => {
-            if (err) {
-                res.status(500).send('Error reading index.html file');
-            } else {
-                const modifiedData = data.replace('{{ACTORS_RESULTS}}', JSON.stringify({ actors: results }));
-                res.send(modifiedData);
-            }
-        });
+        res.send({actors: results});
     });
 });
 
 app.get("/moviesWithHigherRating", (req, res) => {
     getMoviesWithHigherRating((results) => {
-        fs.readFile(path.join(__dirname, "index.html"), 'utf8', (err, data) => {
-            if (err) {
-                res.status(500).send('Error reading index.html file');
-            } else {
-                const modifiedData = data.replace('{{MOVIES_RESULTS}}', JSON.stringify({ movies: results }));
-                res.send(modifiedData);
-            }
-        });
+        res.send({movies: results});
     });
 });
 
 app.get("/genresWithHighestAverageRating", (req, res) => {
     getGenresWithHighestAverageRating((results) => {
-        fs.readFile(path.join(__dirname, "index.html"), 'utf8', (err, data) => {
-            if (err) {
-                res.status(500).send('Error reading index.html file');
-            } else {
-                const modifiedData = data.replace('{{GENRES_RESULTS}}', JSON.stringify({ genres: results }));
-                res.send(modifiedData);
-            }
-        });
+        res.send({genres: results});
     });
 });
-
 
 app.listen(3000, () => {
     console.log("Server is running on http://localhost:3000");
