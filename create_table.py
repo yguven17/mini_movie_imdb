@@ -22,13 +22,13 @@ db_cursor.execute("SHOW DATABASES")
 databases = db_cursor.fetchall()  # Fetch all rows from the cursor
 database_names = [db[0] for db in databases]
 
-if 'mini_movie_imdb' in database_names:
-    db_cursor.execute("DROP DATABASE mini_movie_imdb")
+if 'db' in database_names:
+    db_cursor.execute("DROP DATABASE db")
 
 # creating the database
-db_cursor.execute("CREATE DATABASE mini_movie_imdb")
+db_cursor.execute("CREATE DATABASE db")
 
-db_cursor.execute("USE mini_movie_imdb")
+db_cursor.execute("USE db")
 
 
 def populate_table(db_connection, db_cursor, insert_query, file_path, no_attr):

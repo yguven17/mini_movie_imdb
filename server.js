@@ -14,7 +14,7 @@ const pool = mysql.createPool({
     host: "localhost",
     user: "root",
     password: "password",
-    database: "mini_movie_imdb",
+    database: "db",
 });
 
 pool.query("SELECT * FROM movie", (error, data) => {
@@ -28,25 +28,25 @@ pool.query("SELECT * FROM movie", (error, data) => {
 // general search for input
 function generalSearch(searchText, callback) {
   const query = `
-    SELECT 'movie' AS type, name AS title, NULL AS term
+    SELECT name
     FROM MOVIE
     WHERE name LIKE '%${searchText}%'
     
     UNION ALL
     
-    SELECT 'actor' AS type, name
+    SELECT name
     FROM ACTOR
     WHERE name LIKE '%${searchText }%'
     
     UNION ALL
     
-    SELECT 'director' AS type, name
+    SELECT name
     FROM DIRECTOR
     WHERE name LIKE '%${searchText}%'
     
     UNION ALL
     
-    SELECT 'genre' AS type, NULL AS title, genre
+    SELECT genre
     FROM GENRE_MOVIES
     WHERE genre LIKE '%${searchText}%'
   `;
