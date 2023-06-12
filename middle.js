@@ -1,3 +1,31 @@
+async function getGeneralSearch(searchText) {
+  const response = await fetch(`http://localhost:3000/generalSearch?searchText=${searchText}`);
+  const jsonData = await response.json();
+  return jsonData.results;
+}
+
+function displayGeneralSearch() {
+  const searchText = document.getElementById("searchText").value;
+
+  getGeneralSearch(searchText).then((results) => {
+    const ul = document.getElementById("search-results");
+    ul.innerHTML = ""; // Clear the previous results
+
+    results.forEach((result) => {
+      const li = document.createElement("li");
+      if (result.type === "movie") {
+        li.textContent = result.title;
+      } else if (result.type === "actor" || result.type === "director") {
+        li.textContent = result.name;
+      } else if (result.type === "genre") {
+        li.textContent = result.genre;
+      }
+      ul.appendChild(li);
+    });
+  });
+}
+
+
 async function getMoviesByDirector(director) {
     const response = await fetch(`http://localhost:3000/moviesByDirector?director=${director}`);
     const jsonData = await response.json();
@@ -8,7 +36,7 @@ function displayMoviesByDirector() {
     const director = document.getElementById("director").value;
 
     getMoviesByDirector(director).then((movies) => {
-        const ul = document.getElementById("movies-by-director");
+        const ul = document.getElementById("data");
         ul.innerHTML = ""; // Clear the previous results
 
         movies.forEach((movie) => {

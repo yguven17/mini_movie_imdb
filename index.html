@@ -9,6 +9,13 @@
 <body>
 <h1>Movie Search</h1>
 
+<h2>General Search</h2>
+<form action="/generalSearch" method="GET">
+    <label for="searchText">Director:</label>
+    <input type="text" id="searchText" name="searchText">
+    <button onclick="displayMoviesByDirector()">General Search</button>
+</form>
+
 <h2>Search by Director</h2>
 <form action="/moviesByDirector" method="GET">
     <label for="director">Director:</label>
@@ -69,6 +76,11 @@
     <input type="text" id="cq5" name="cq5">
     <button onclick="displayMoviesByGenre()">Show Complex Query</button>
 </form>
+
+<li2>Movie Search Results</li2>
+
+<ul id="data"></ul>
+
 
 
 </body>

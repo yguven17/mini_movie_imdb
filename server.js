@@ -25,6 +25,40 @@ pool.query("SELECT * FROM movie", (error, data) => {
     console.log("Connection made to the database");
 });
 
+
+function generalSearch(searchText, callback) {
+  const query = `
+    SELECT 'movie' AS type, name AS title, NULL AS term
+    FROM MOVIE
+    WHERE name LIKE '%${searchText}%'
+    
+    UNION ALL
+    
+    SELECT 'actor' AS type, name, birth_date
+    FROM ACTOR
+    WHERE name LIKE '%${searchText}%'
+    
+    UNION ALL
+    
+    SELECT 'director' AS type, name, birth_date
+    FROM DIRECTOR
+    WHERE name LIKE '%${searchText}%'
+    
+    UNION ALL
+    
+    SELECT 'genre' AS type, NULL AS title, genre
+    FROM GENRE_MOVIES
+    WHERE genre LIKE '%${searchText}%'
+  `;
+
+  pool.query(query, (error, results) => {
+    if (error) throw error;
+    callback(results);
+  });
+}
+
+
+
 function getMoviesByDirector(director, callback) {
     pool.query(
         "SELECT * FROM MOVIE m INNER JOIN DIRECTOR d ON m.director_id = d.director_id WHERE d.name LIKE ?",
@@ -144,15 +178,19 @@ function getGenresWithHighestAverageRating(callback) {
 }
 
 
-
-
-
-
-
 // linking
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "index.html"));
 });
+
+app.get("/generalSearch", (req, res) => {
+  const searchText = req.query.searchText;
+
+  generalSearch(searchText, (results) => {
+    res.send({ searchResults: results });
+  });
+});
+
 
 app.get("/moviesByDirector", (req, res) => {
     const director = req.query.director;
