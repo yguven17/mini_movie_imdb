@@ -13,21 +13,21 @@
 <form action="/generalSearch" method="GET">
     <label for="searchText">Director:</label>
     <input type="text" id="searchText" name="searchText">
-    <button onclick="displayMoviesByDirector()">General Search</button>
+    <button placeholder="Charlton" onclick="displayMoviesByDirector()">General Search</button>
 </form>
 
 <h2>Search by Director</h2>
 <form action="/moviesByDirector" method="GET">
     <label for="director">Director:</label>
     <input type="text" id="director" name="director">
-    <button onclick="displayMoviesByDirector()">Show Movies</button>
+    <button placeholder="Charlton" onclick="displayMoviesByDirector()">Show Movies</button>
 </form>
 
 <h2>Search by Actor</h2>
 <form action="/moviesByActor" method="GET">
     <label for="actor">Actor Name:</label>
     <input type="text" id="actor" name="actor">
-    <button onclick="displayMoviesByActor()">Show Actors</button>
+    <button placeholder="Tony"  onclick="displayMoviesByActor()">Show Actors</button>
 </form>
 
 <h2>Search by Release Date</h2>
@@ -41,7 +41,7 @@
 <form action="/moviesByGenre" method="GET">
     <label for="genre">Genre:</label>
     <input type="text" id="genre" name="genre">
-    <button onclick="displayMoviesByGenre()">Show Genre Movies</button>
+    <button placeholder="click Show Complex Query " onclick="displayMoviesByGenre()">Show Genre Movies</button>
 </form>
 
 
@@ -49,7 +49,7 @@
 <form action="/directorsWithMultipleGenres" method="GET">
     <label for="cq1">Complex Query 1:</label>
     <input type="text" id="cq1" name="cq1">
-    <button onclick="displayMoviesByGenre()">Show Complex Query</button>
+    <button placeholder="click Show Complex Query " onclick="displayMoviesByGenre()">Show Complex Query</button>
 </form>
 
 
@@ -57,7 +57,7 @@
 <form action="/actorsWithDirectorsInSameYear" method="GET">
     <label for="cq2">Complex Query2 :</label>
     <input type="text" id="cq2" name="cq2">
-    <button onclick="displayMoviesByGenre()">Show Complex Query</button>
+    <button placeholder="click Show Complex Query " onclick="displayMoviesByGenre()">Show Complex Query</button>
 </form>
 
 
@@ -65,16 +65,16 @@
 <form action="/moviesWithHigherRating" method="GET">
     <label for="cq3">Complex Query 3:</label>
     <input type="text" id="cq3" name="cq3">
-    <button onclick="displayMoviesByGenre()">Show Complex Query</button>
+    <button placeholder="click Show Complex Query " onclick="displayMoviesByGenre()">Show Complex Query</button>
 </form>
 
 
 
 <h2>Complex Query 4</h2>
 <form action="/genresWithHighestAverageRating" method="GET">
-    <label for="cq5">Complex Query 5:</label>
+    <label for="cq5">Complex Query 4:</label>
     <input type="text" id="cq5" name="cq5">
-    <button onclick="displayMoviesByGenre()">Show Complex Query</button>
+    <button placeholder="click Show Complex Query " onclick="displayMoviesByGenre()">Show Complex Query</button>
 </form>
 
 <li2>Movie Search Results</li2>
