@@ -34,13 +34,13 @@ function generalSearch(searchText, callback) {
     
     UNION ALL
     
-    SELECT 'actor' AS type, name, birth_date
+    SELECT 'actor' AS type, name
     FROM ACTOR
-    WHERE name LIKE '%${searchText}%'
+    WHERE name LIKE '%${searchText }%'
     
     UNION ALL
     
-    SELECT 'director' AS type, name, birth_date
+    SELECT 'director' AS type, name
     FROM DIRECTOR
     WHERE name LIKE '%${searchText}%'
     
